@@ -2,9 +2,7 @@
 @section('title')
     Главные новости
 @endsection
-@section('head')
-<link rel="shortcut icon" href="{{asset('image/logo2.png')}}" type="image/png">
-@endsection
+
 @section('content')
 <div class="flex flex-col lg:flex-row mt-4 " >
     <div class="flex-1">
@@ -14,7 +12,7 @@
             <a href="{{route('post.show',$post->slug)}}" ><img src="{{asset('storage/images/origin/'.$post->image)}}" class="rounded-xl w-full lg:w-[90%] transition-all duration-200 hover:transform hover:scale-95" alt=""></a>
             <p class="font-bold text-xl absolute bottom-6 left-6 w-2/3">
                 <a href="{{route('post.show',$post->slug)}}" class="hover:text-red-500 transition-all duration-400">{{$post->title}}</a> <br>
-                <span class="italic text-xs  "><small>{{date_format($post->created_at,'d.m.Y, H:i:s')}}</small></span>
+                <span class="text-xs">{{date_format($post->created_at,'d.m.Y, H:i:s')}}</span>
             </p>
         </div>
         @endforeach
