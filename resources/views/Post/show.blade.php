@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 @section('title')
-    {{$post->title}}1
+    {{$post->title}}
 @endsection
 @section('head')
 <link rel="shortcut icon" href="{{asset('storage/images/thumbnail/'.$post->image)}}" type="image/jpg">
