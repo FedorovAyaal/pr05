@@ -1,15 +1,18 @@
 @extends('layouts.layout')
 @section('title')
-    Create Post
+    Редактировать пост 
 @endsection
 
+
 @section('content')
-<form action="{{route('post.store')}}" method="POST"  enctype="multipart/form-data">
+<form action="{{route('post.store_update',$post->id)}}" class="mb-4" method="POST" enctype="multipart/form-data">
     @csrf
+    @method("patch")
+   
     <div class="w-3/4 lg:w-1/2 mx-auto mt-10">
-        <h1 class="text-3xl mb-10">Создать новый пост</h1>
+        <h1 class="text-3xl mb-10">Редактировать пост</h1>
         <div class="relative z-0 mb-6 w-full group">
-            <input type="text" name="title" id="floating_email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer focus:bg-none" placeholder=" " required autocomplete="email" value="{{old('email')}}"/>
+            <input type="text" name="title" id="floating_email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer focus:bg-none" placeholder=" " required autocomplete="email" value="{{$post->title}}"/>
             @error('email')
             <p class="text-red-500"><small>{{$message}}</small></p>
             @enderror
@@ -19,7 +22,7 @@
 
 
         <div class="relative z-0 mb-6 w-full group">
-            <textarea name="content" id="floating_repeat_password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required ></textarea>
+            <textarea name="content" rows="4" id="floating_repeat_password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required >{{$post->content}}</textarea>
             @error('password_confirmation')
             <p class="text-red-500"><small>{{$message}}</small></p>
             @enderror
@@ -27,29 +30,29 @@
         </div>
         <div class="relative z-0 mb-6 w-full group">
             <p class="text-gray-500 text-sm">Выберите изображение</p>
-            <input type="file" name="image" class="mt-2 text-sm text-red-400 cursor-pointer " required>
+            <img src="{{asset('storage/images/origin/'.$post->image)}}" class="mt-4 rounded " alt="">
+            <input type="file" name="image" class="mt-2 text-sm text-red-400 cursor-pointer " value="{{asset('storage/images/origin'.$post->image)}}">
         </div>
         <p class="text-gray-500 text-sm">Включить комментарии?</p>
         <div class="mt-4">
             <input type="radio" id="contactChoice1"
-             name="comments_available" checked value="1">
+             name="comments_available" @if($post->comments_available == 1) checked @endif value="1">
             <label for="contactChoice1">Да</label>
         
             <input type="radio" id="contactChoice2"
-             name="comments_available" value="0">
+             name="comments_available" @if($post->comments_available == 0) checked @endif value="0">
             <label for="contactChoice2">Нет</label>
         </div>
         <div class="mt-4">
             <label for="countries" class="text-gray-500 text-sm">Выберите категорию</label>
             <select required name="category_id" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option selected>Выберите категорию</option>
             @foreach($all_categories as $category)
-                <option value="{{$category->id}}">{{$category->name}}</option>
+                <option @if($post->category_id == $category->id) selected @endif value="{{$category->id}}">{{$category->name}}</option>
             @endforeach
             </select>
         </div>
 
-        <button type="submit" class="text-white mt-4 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Создать</button>
+        <button type="submit" class="text-white mt-4 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Обновить</button>
         
       </div>
 </form>
