@@ -5,14 +5,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\Post\PostController;
 use App\Http\Controllers\Post\StorePostController;
+use App\Http\Controllers\Post\SearchController;
 use App\Http\Controllers\Post\ShowPostController;
 use App\Http\Controllers\Post\StoreCommentController;
 use App\Http\Controllers\Post\PostUpdateController;
 use App\Http\Controllers\Post\StoreUpdatePostController;
 use App\Http\Controllers\Post\DeleteCommentController;
-
-
-
 use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +27,7 @@ Auth::routes();
 Route::get('/', IndexController::class)->name("home");
 Route::get('/post/{slug}', ShowPostController::class)->name("post.show");
 Route::get('category/{id}', CategoryController::class)->name('post.by_category');
+Route::get('post/', SearchController::class)->name('post.by_search');
 //Действия для администратора
 Route::group(['middleware' => ['auth', 'admin']], function () {
     //Добавление новости

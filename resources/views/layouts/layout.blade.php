@@ -35,14 +35,27 @@
               </button>
             </div>
             <div class="w-full hidden flex-grow lg:flex lg:items-center lg:w-auto" id="menu">
-              <div class="text-lg lg:flex-grow">
+              <div class="text-lg lg:flex-grow               @if(request()->get('search')) hidden
+                
+                @endif " id="menu-links">
 
                 @foreach($all_categories as $category)
                 <a href="{{route('post.by_category',$category->id)}}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-100 hover:underline hover:underline-offset-4 hover:text-white mr-4">
                   {{$category->name}}
                 </a>
                 @endforeach
+              
+                
               </div>
+
+              <div class="search-bar flex lg:flex-grow mt-4 lg:mt-0 @if(request()->get('search')) block @else hidden @endif " id="search-bar">
+                <form action="{{route('post.by_search')}}" method="GET" class="inline w-full" id="searchForm">
+                  <input type="text" name="search" class="p-2 mr-6 w-[100%] lg:w-[95%] rounded"               @if(request()->get('search'))
+                  value = "{{request()->get('search')}}"
+                  @endif placeholder="Поиск...">
+                </form>
+              </div>
+              <input type="button" class="inline-block text-lg px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0 mr-1" value="Поиск" id="searchBtn">
               <div>
 
                 @if(auth()->check())
@@ -60,6 +73,7 @@
                 @endif
               </div>
             </div>
+            
           </div>
     </div>
 

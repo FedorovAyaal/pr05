@@ -9,7 +9,7 @@ class CategoryController extends Controller
 {
     public function __invoke($id)
     {
-        $mainNew = Post::where('category_id', $id)->inRandomOrder()->limit(3)->get();;
+        $mainNew = Post::where('category_id', $id)->inRandomOrder()->limit(4)->get();;
         $threePosts =  Post::where('category_id', $id)->orderBy('id', 'DESC')->get();
         return view('index', compact('threePosts', 'mainNew'));
     }

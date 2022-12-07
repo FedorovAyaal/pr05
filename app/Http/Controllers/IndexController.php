@@ -10,7 +10,7 @@ class IndexController extends Controller
 {
     public function __invoke()
     {
-        $mainNew = Post::inRandomOrder()->limit(3)->get();;
+        $mainNew = Post::inRandomOrder()->limit(4)->get();;
         $threePosts =  Post::orderBy('id', 'DESC')->get();
         return view('index', compact('threePosts', 'mainNew'));
     }

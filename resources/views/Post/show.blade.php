@@ -10,7 +10,7 @@
 <div class="container mx-auto">
     <div class="flex flex-col space-y-4 bg-gray-200 rounded-xl p-10 mt-4">
         <div class="info">
-            <small >{{ date_format($post->created_at,'d.m.Y, H:i:s')}}</small> @can('view',auth()->user()) <a href="{{route('post.update',$post->id)}}" class="inline-block sm:float-right text-sm px-4 py-2 leading-none border rounded text-teal-500 border-teal-500 hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Редактировать пост</a>  @endcan
+            <small >{{ date_format($post->created_at,'d.m.Y, H:i:s')}}</small> @can('view',auth()->user()) <a href="{{route('post.update',$post->id)}}" class="inline-block sm:float-right text-sm px-4 py-2 leading-none border rounded text-red-500 border-red-500 hover:border-transparent hover:text-red-500 hover:bg-white mt-4 lg:mt-0 lg:ml-4">Удалить пост</a> <a href="{{route('post.update',$post->id)}}" class="inline-block sm:float-right text-sm px-4 py-2 leading-none border rounded text-teal-500 border-teal-500 hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Редактировать пост</a>  @endcan
         </div>
         <div class="title font-bold text-3xl">
             {{$post->title}}

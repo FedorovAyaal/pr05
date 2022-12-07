@@ -5,11 +5,7 @@
 
 @section('content')
 <!--TODO::Search bar-->
-<div class="flex flex-col">
-    <div class="search">
-        <input type="text"> <input type="button" value="123">
-    </div>
-</div>
+
 <div class="flex flex-col lg:flex-row mt-4 " >
     @if(count($threePosts) == 0)
     <p class="text-xl text-gray-500">Новостей не найдено</p>
