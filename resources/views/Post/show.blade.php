@@ -9,8 +9,8 @@
 
 <div class="container mx-auto">
     <div class="flex flex-col space-y-4 bg-gray-200 rounded-xl p-10 mt-4">
-        <div class="info">
-            <small >{{ date_format($post->created_at,'d.m.Y, H:i:s')}}</small> @can('view',auth()->user()) <a href="{{route('post.update',$post->id)}}" class="inline-block sm:float-right text-sm px-4 py-2 leading-none border rounded text-red-500 border-red-500 hover:border-transparent hover:text-red-500 hover:bg-white mt-4 lg:mt-0 lg:ml-4">Удалить пост</a> <a href="{{route('post.update',$post->id)}}" class="inline-block sm:float-right text-sm px-4 py-2 leading-none border rounded text-teal-500 border-teal-500 hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Редактировать пост</a>  @endcan
+        <div class="info lg:block flex flex-wrap">
+            <small >{{ date_format($post->created_at,'d.m.Y, H:i:s')}}</small> @can('view',auth()->user()) <div class="inline"> <button  class="inline sm:float-right text-sm px-4 py-2 leading-none border rounded text-red-500 border-red-500 hover:border-transparent hover:text-red-500 hover:bg-white mt-4 lg:mt-0 lg:ml-4" id="deletePostBtn">Удалить пост</button> <a href="{{route('post.update',$post->id)}}" class="inline-block sm:float-right text-sm px-4 py-2 leading-none border rounded text-teal-500 border-teal-500 hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Редактировать пост</a>  </div>@endcan
         </div>
         <div class="title font-bold text-3xl">
             {{$post->title}}
@@ -69,11 +69,8 @@
                         @method('delete')
                         <button id="deleteComment" type="submit" class="mr-2 text-red-400 hover:text-red-600   ">Удалить</button>
                     </form>
-                    <form action="{{route('post.delete_comment',$comment->id)}}" id="hoh" method="POST" class="">
-                        @csrf
-                        @method('delete')
-                        <button id="editComment" onclick="edit({{$comment->id}})" class="text-green-400 hover:text-green-600 mx-3 ">Редактировать</button>
-                    </form>
+
+                    <button id="editComment" onclick="edit({{$comment}})" class="text-green-400 hover:text-green-600 mx-3 ">Редактировать</button>
 
                     @endif
                  </div>
@@ -99,22 +96,62 @@
 >
 	<div class="mt-3 text-center">
 
-		<h3 class="text-lg leading-6 font-medium text-gray-900">Вы точно хотите удалить комментарий?</h3>
+		<h3 class="text-lg leading-6 font-medium text-gray-900">Вы точно хотите удалить пост?</h3>
 		<div class="mt-2 px-7 py-3">
 			<p class="text-xs text-gray-500">
 				Это действие нельзя будет отменить
 			</p>
 		</div>
 		<div class="flex space-x-1 px-4 py-3">
-                <button id="ok-btn" class="px-4 py-2 bg-green-500 text-white text-base font-medium rounded-md w-1/2 shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300">
-				Да
-			</button>
+            <form action="{{route('post.delete',$post->id)}}" method="POST" class="w-1/2">
+                @method('delete')
+                @csrf
+                <button id="ok-btn" type="submit" class="px-4 py-2 bg-green-500 w-full text-white text-base font-medium rounded-md shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300">
+                    Да
+                </button>
+            </form>
+
 
 
             <button id="cancel-btn" class="px-4 py-2 bg-red-500 text-white text-base font-medium rounded-md w-1/2 shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300">
 				Нет
 			</button>
 		</div>
+	</div>
+</div>
+</div>
+
+
+<div
+	class="fixed hidden inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
+	id="update-comment-modal"
+>
+<!--modal content-->
+<div
+	class="relative top-20 mx-auto p-2 border w-[500px] shadow-lg rounded-md bg-white"
+>
+	<div class="mt-3 text-center">
+
+		<h3 class="text-lg leading-6 font-medium text-gray-900">Редактирование комментария</h3>
+        <form method="POST" class="w-full" id="updateCommentForm">
+            @method('patch')
+            @csrf
+            <input type="hidden" name="post_id" value="{{$post->id}}">
+            <div class="mt-2 px-7 py-3">
+                <p class="text-xs text-gray-500">
+                    <textarea id="comment_message" name="text" rows="3" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Напишите что вы думаете о этой новости..."></textarea>
+                    </textarea> 
+                </p>
+            </div>
+            <div class="flex space-x-1 px-4 py-3">
+                <button id="update-comment-btn" type="submit" class="px-4 py-2 bg-green-500 w-1/2 text-white text-base font-medium rounded-md shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300">
+                    Редактировать
+                </button>
+                <button id="cancel-comment-btn" type="button" class="px-4 py-2 bg-red-500 text-white text-base font-medium rounded-md w-1/2 shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300">
+                    Отменить
+                </button>
+            </div>
+        </form>
 	</div>
 </div>
 </div>

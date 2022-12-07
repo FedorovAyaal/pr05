@@ -9,6 +9,10 @@ use App\Http\Controllers\Post\SearchController;
 use App\Http\Controllers\Post\ShowPostController;
 use App\Http\Controllers\Post\StoreCommentController;
 use App\Http\Controllers\Post\PostUpdateController;
+use App\Http\Controllers\Post\PostDeleteController;
+use App\Http\Controllers\Post\UpdateCommentController;
+
+
 use App\Http\Controllers\Post\StoreUpdatePostController;
 use App\Http\Controllers\Post\DeleteCommentController;
 use Illuminate\Support\Facades\Auth;
@@ -36,10 +40,13 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     //TODO:Редактирование новости
     Route::get('/update/post/{post}', PostUpdateController::class)->name('post.update');
     Route::patch('/update/post/{post}', StoreUpdatePostController::class)->name('post.store_update');
+    //Удаление новости
+    Route::delete('/delete/post/{post}', PostDeleteController::class)->name('post.delete');
 });
 
 //Действия для всех авторизованных пользователей
 Route::group(['middleware' => ['auth']], function () {
     Route::post('/create/comment/{post_id}', StoreCommentController::class)->name('post.store_comment');
     Route::delete('/delete/comment/{comment}', DeleteCommentController::class)->name('post.delete_comment');
+    Route::patch('/update/comment/{comment}', UpdateCommentController::class)->name('post.comment_update');
 });
