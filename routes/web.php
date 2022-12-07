@@ -14,6 +14,8 @@ use App\Http\Controllers\Post\UpdateCommentController;
 
 
 use App\Http\Controllers\Post\StoreUpdatePostController;
+use App\Http\Controllers\Post\StoreReportController;
+
 use App\Http\Controllers\Post\DeleteCommentController;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -46,6 +48,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 
 //Действия для всех авторизованных пользователей
 Route::group(['middleware' => ['auth']], function () {
+    Route::post('/create/report/{comment}', StoreReportController::class)->name('post.store_report');
     Route::post('/create/comment/{post_id}', StoreCommentController::class)->name('post.store_comment');
     Route::delete('/delete/comment/{comment}', DeleteCommentController::class)->name('post.delete_comment');
     Route::patch('/update/comment/{comment}', UpdateCommentController::class)->name('post.comment_update');
