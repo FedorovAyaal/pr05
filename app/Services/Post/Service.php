@@ -18,11 +18,11 @@ class Service
             $ext = pathinfo($unpreparedFilename, PATHINFO_EXTENSION);
             $filename = $data['slug'] . '.' . $ext;
             $data['image']->move(Storage::path('/public/images/') . 'origin/', $filename);
-
+            /*
             $thumbnail = Image::make(Storage::path('/public/images/') . 'origin/' . $filename);
             $thumbnail->fit(250, 350);
             $thumbnail->save(Storage::path('/public/images/') . 'thumbnail/' . $filename);
-
+            */
             $data['image'] = $filename;
         } else {
             $data['image'] = 'photo_not_exists.jpg';

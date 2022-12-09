@@ -23,12 +23,7 @@ let rcm = document.getElementById('report-comment-modal');
 let rcf = document.getElementById('reportCommentForm');
 
 let cancelReport = document.getElementById('cancel-report-btn');
-//Message bindings
-let ok_mcb = document.getElementById('message-comment-btn');
 
-let m_modal = document.getElementById('message-modal');
-
-let message_pop = document.getElementById('message_pop');
 
 openm.addEventListener('click',function(){
     modal.style.display = "block"
@@ -76,11 +71,3 @@ function report(comment){
         rcm.style.display = "none";
     }
 }
-function message(message){
-    m_modal.style.display = "block";
-    message_pop.innerText = message;
-    ok_mcb.onclick = function(){
-        m_modal.style.display = "none";
-    }
-}
-

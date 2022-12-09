@@ -20,9 +20,9 @@ class Report extends Model
     {
         return $this->belongsTo(Comment::class);
     }
-    public function from_user_id()
+    public function from_user()
     {
-        return $this->belongsTo(User::class, 'from_user_id', 'id');
+        return $this->belongsTo(User::class);
     }
     public function reason()
     {

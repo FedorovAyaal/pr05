@@ -6,7 +6,7 @@
 @section('content')
 <!--TODO::Search bar-->
 
-<div class="flex flex-col lg:flex-row mt-4 " >
+<div class="flex flex-col md:flex-row mt-4 " >
     @if(count($threePosts) == 0)
     <p class="text-xl text-gray-500">Новостей не найдено</p>
     @else
@@ -16,7 +16,7 @@
         @foreach($mainNew as $post)
         <div class="main-new text-white relative">
             <a href="{{route('post.show',$post->slug)}}" ><img src="{{asset('storage/images/origin/'.$post->image)}}" class="rounded-xl w-full lg:w-[90%] transition-all duration-200 hover:transform hover:scale-95" alt=""></a>
-            <p class="font-bold text-xl absolute bottom-6 left-6 w-2/3">
+            <p class="font-bold text-sm lg:text-xl absolute bottom-6 left-6 w-2/3">
                 <a href="{{route('post.show',$post->slug)}}" class="hover:text-red-500 transition-all duration-400">{{$post->title}}</a> <br>
                 <span class="text-xs">{{date_format($post->created_at,'d.m.Y, H:i:s')}}</span>
             </p>

@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="shortcut icon" href="{{asset('image/logo14.png')}}" type="image/png">
     @yield("head")
+
+
     <title> @yield('title') </title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -35,9 +36,7 @@
               </button>
             </div>
             <div class="w-full hidden flex-grow lg:flex lg:items-center lg:w-auto" id="menu">
-              <div class="text-lg lg:flex-grow               @if(request()->get('search')) hidden
-                
-                @endif " id="menu-links">
+              <div class="text-sm lg:flex-grow @if(request()->get('search')) hidden @endif " id="menu-links">
 
                 @foreach($all_categories as $category)
                 <a href="{{route('post.by_category',$category->id)}}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-100 hover:underline hover:underline-offset-4 hover:text-white mr-4">
@@ -55,21 +54,41 @@
                   @endif placeholder="Поиск...">
                 </form>
               </div>
-              <input type="button" class="inline-block text-lg px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0 mr-1" value="Поиск" id="searchBtn">
+              <input type="button" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0 mr-10" value="Поиск" id="btnDropdownMenu">
               <div>
 
                 @if(auth()->check())
-                @can('view',auth()->user())
-                <a href="{{route('post.create')}}" class="inline-block text-lg px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Admin</a>
-                @endcan
-                <form action="{{route('logout')}}" method="POST" class="inline-block">
-                    @csrf
-                    <button class="inline-block text-lg px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0" type="submit">Выйти</button>
-                </form>
+                <img src="{{asset('storage/images/avatar/cropped/'.auth()->user()->avatar)}}" class="mt-4 lg:mt-0 h-14 rounded-full" alt="" id="searchBtn">
+
+
+              <div id="dropdownMenu" class="hidden absolute mt-2 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
+                  <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefault">
+                    @can('view',auth()->user())
+                    <li>
+                      <a href="{{route('post.create')}}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Создать пост</a>
+                    </li>
+                    <li>
+                      <a href="{{route('admin.reports')}}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Жалобы</a>
+                    </li>
+                    @endcan
+                    <li>
+                      <a href="{{route('profile.index')}}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Профиль</a>
+                    </li>
+                    <li>
+                      <form action="{{route('logout')}}" method="POST" class="w-full m-0">
+                        @csrf
+                        <button class=" text-left block py-2 px-4 hover:bg-gray-100 w-full dark:hover:bg-gray-600 dark:hover:text-white" type="submit">Выйти</button>
+                    </form>
+                  
+                    </li>
+                  </ul>
+              </div>
+                
+
 
                 @else
-                <a href="{{route('login')}}" class="inline-block text-lg px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Войти</a>
-                <a href="{{route('register')}}" class="inline-block text-lg px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Регистрация</a>
+                <a href="{{route('login')}}" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Войти</a>
+                <a href="{{route('register')}}" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Регистрация</a>
                 @endif
               </div>
             </div>
@@ -81,13 +100,41 @@
 
       <div class="container mx-auto w-4/5">
         @yield('content')
+        <div
+	class="fixed hidden inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
+	id="message-modal"
+>
+<!--modal content-->
+<div
+	class="relative top-20 mx-auto p-2 border w-[400px] shadow-lg rounded-md bg-white"
+>
+	<div class="mt-3 text-center">
+
+		<h3 class="text-xl leading-6 font-medium text-gray-900">Сообщение</h3>
+   
+            
+            <div class="mt-2 px-7 py-3">
+                <p class="text-sm text-gray-500" id="message_pop">
+
+                </p>
+            </div>
+            <div class="flex space-x-1 px-4 py-3">
+                <button id="message-comment-btn" type="submit" class="px-4 py-2 bg-green-500 w-full text-white text-base font-medium rounded-md shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300">
+                    OK
+                </button>
+            </div>
+        
+	</div>
+</div>
+</div>
       </div>
     
 
     <footer>
   
     </footer>
-    @yield("scripts")
     <script src="{{asset('js/layout.js')}}"></script>
+    @yield("scripts")
+
 </body>
 </html>
