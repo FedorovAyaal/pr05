@@ -21,7 +21,7 @@
                 <p>Отправитель: <a href="">{{$report->comment->author->name}}</a></p>
                 <p>Статус отправителя: @if($report->comment->author->status == 2) <span class="text-red-500">Забанен</span> @elseif($report->comment->author->status == 1) <span class="text-blue-500"> Админ </span> @else <span class="text-green-500"> Пользователь </span>@endif </p>
                 <div class="w-full py-4 flex space-y-0 space-x-6">
-                    <img class="block mx-0 h-12 lg:h-16 rounded-full shrink-0" src="{{asset('storage/images/avatar/'.$report->comment->author->avatar)}}" alt="Avatar">
+                    <img class="block mx-0 h-12 lg:h-16 rounded-full shrink-0" src="{{asset('storage/images/avatar/cropped/'.$report->comment->author->avatar)}}" alt="Avatar">
                     <div class="space-y-2">
                       <div class="space-y-0.5">
                         <p class="text-xs text-white">{{date_format($report->comment->created_at,'d.m.Y, H:i:s')}}</p>
